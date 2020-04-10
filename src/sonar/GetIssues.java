@@ -26,6 +26,22 @@ import org.apache.commons.httpclient.params.HttpMethodParams;
 
 public class GetIssues {
 
+	
+	public static void main(String[] args) {
+		
+		Map<String, Object> user = new HashMap<String, Object>();
+		user.put("login", "admin");
+		user.put("password", "admin");
+		
+		//System.out.println(".");
+		StringBuffer cookie = doPost("http://39.106.124.113:9000/api/authentication/login", user);
+		String url = "http://39.106.124.113:9000/api/issues/search?componentKeys=ks-cms-unicorn&s=FILE_LINE&resolved=false&types=CODE_SMELL,BUG,VULNERABILITY&additionalFields=_all";
+		String str = doGet(url, cookie.toString());
+		System.out.println(str);
+		writeFile(str, "$JENKINS_HOME/jobs/$JOB_NAME/issues.txt");
+		
+	}
+	
 	public static String doGet(String url, String cookie) {
 		
 		InputStream is = null;
@@ -196,19 +212,5 @@ public class GetIssues {
     	}
     }
 	
-	public static void main(String[] args) {
-		
-		Map<String, Object> user = new HashMap<String, Object>();
-		user.put("login", "admin");
-		user.put("password", "admin");
-		
-		//System.out.println(".");
-		StringBuffer cookie = doPost("http://39.106.124.113:9000/api/authentication/login", user);
-		String url = "http://39.106.124.113:9000/api/issues/search?componentKeys=ks-cms-unicorn&s=FILE_LINE&resolved=false&types=CODE_SMELL,BUG,VULNERABILITY&additionalFields=_all";
-		String str = doGet(url, cookie.toString());
-		System.out.println(str);
-		writeFile(str, "$JENKINS_HOME/jobs/$JOB_NAME/issues.txt");
-		
-	}
 
 }

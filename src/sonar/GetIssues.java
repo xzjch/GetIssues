@@ -207,7 +207,7 @@ public class GetIssues {
 		String url = "http://39.106.124.113:9000/api/issues/search?componentKeys=test&s=FILE_LINE&resolved=false&types=CODE_SMELL,BUG,VULNERABILITY&additionalFields=_all";
 		String str = doGet(url, cookie.toString());
 		System.out.println(str);
-		writeFile(str, "D:/xzj/code/1.txt");
+		writeFile(str, "$JENKINS_HOME/jobs/$JOB_NAME/issues.txt");
 		
 	}
 
